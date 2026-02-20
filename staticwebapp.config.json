@@ -1,0 +1,47 @@
+{
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN"
+  },
+  "routes": [
+    {
+      "route": "/images/*.webp",
+      "headers": {
+        "Cache-Control": "public, max-age=2592000"
+      }
+    },
+    {
+      "route": "/images/*.png",
+      "headers": {
+        "Cache-Control": "public, max-age=2592000"
+      }
+    },
+    {
+      "route": "/images/*.jpg",
+      "headers": {
+        "Cache-Control": "public, max-age=2592000"
+      }
+    },
+    {
+      "route": "/*.ico",
+      "headers": {
+        "Cache-Control": "public, max-age=2592000"
+      }
+    },
+    {
+      "route": "/*.css",
+      "headers": {
+        "Cache-Control": "public, max-age=2592000"
+      }
+    },
+    {
+      "route": "/*.js",
+      "headers": {
+        "Cache-Control": "public, max-age=2592000"
+      }
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html"
+  }
+}
