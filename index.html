@@ -5,6 +5,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="preload" as="image" href="images/mechanical_piping_hero.webp" type="image/webp">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akas Mühendislik | Mekanik Tesisat ve İklimlendirme Çözümleri</title>
@@ -280,7 +281,7 @@
     <section id="home" class="relative h-screen w-full overflow-hidden">
         <!-- Slide 1 - Mekanik Tesisat -->
         <div class="hero-slide active absolute inset-0">
-            <img src="images/mechanical_piping_hero.webp" alt="Mekanik Tesisat" class="absolute inset-0 w-full h-full object-cover">
+            <img src="images/mechanical_piping_hero.webp" alt="Mekanik Tesisat" class="absolute inset-0 w-full h-full object-cover" fetchpriority="high">
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
             <div class="relative z-20 h-full flex items-center">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -307,7 +308,7 @@
 
         <!-- Slide 2 - Daikin VRV -->
         <div class="hero-slide absolute inset-0">
-            <img src="images/daikin_vrv_hero.webp" alt="Daikin VRV" class="absolute inset-0 w-full h-full object-cover">
+            <img src="images/daikin_vrv_hero.webp" alt="Daikin VRV" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
             <div class="relative z-20 h-full flex items-center">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -334,7 +335,7 @@
 
         <!-- Slide 3 - Hoval -->
         <div class="hero-slide absolute inset-0">
-            <img src="images/hoval_hero.webp" alt="Hoval Alan Soğutma" class="absolute inset-0 w-full h-full object-cover">
+            <img src="images/hoval_hero.webp" alt="Hoval Alan Soğutma" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
             <div class="relative z-20 h-full flex items-center">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -361,7 +362,7 @@
 
         <!-- Slide 4 - Daikin Chiller -->
         <div class="hero-slide absolute inset-0">
-            <img src="images/daikin_chiller_hero.webp" alt="Daikin Chiller" class="absolute inset-0 w-full h-full object-cover">
+            <img src="images/daikin_chiller_hero.webp" alt="Daikin Chiller" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
             <div class="relative z-20 h-full flex items-center">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -388,7 +389,7 @@
 
         <!-- Slide 5 - Paslanmaz Çelik -->
         <div class="hero-slide absolute inset-0">
-            <img src="images/stainless_steel_hero.webp" alt="Paslanmaz Çelik" class="absolute inset-0 w-full h-full object-cover">
+            <img src="images/stainless_steel_hero.webp" alt="Paslanmaz Çelik" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
             <div class="relative z-20 h-full flex items-center">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -678,90 +679,90 @@
                 <div id="logoCarousel" class="flex" style="will-change: transform;">
                     <!-- Logo 1 - Sarıkaya -->
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-1.png" alt="Sarıkaya" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <!-- Logo 2 - Metkom -->
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-2.png" alt="Metkom" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <!-- Logo 3 - Ramos -->
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-3.png" alt="Ramos" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <!-- Logo 4 - Medcem -->
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-4.png" alt="Medcem" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <!-- Logo 5 - TMO -->
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-5.png" alt="TMO" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <!-- Logo 6 - Lagos -->
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-6.png" alt="Lagos" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <!-- Logo 7 - Dervişoğlu -->
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-7.png" alt="Dervişoğlu" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <!-- Logo 8 -->
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-8.png" alt="Referans 8" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <!-- Duplicate for seamless loop (8 logo - tam set) -->
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-1.png" alt="Ceyport Taşucu" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-2.png" alt="Metkom" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-3.png" alt="Ramos" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-4.png" alt="Medcem" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-5.png" alt="TMO" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-6.png" alt="Lagos" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-7.png" alt="Dervişoğlu" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
                     <div class="flex-shrink-0 w-64 mx-6">
-                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 grayscale opacity-70 hover:grayscale-0 hover:opacity-100">
+                        <div class="bg-white p-10 flex items-center justify-center h-32 rounded-md transition-all duration-300 ">
                             <img src="images/ref-logo-8.png" alt="Referans 8" class="max-h-20 max-w-full object-contain">
                         </div>
                     </div>
