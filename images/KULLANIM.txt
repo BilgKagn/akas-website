@@ -1,0 +1,47 @@
+📸 HERO SLIDER GÖRSELLERİ - 5 ADET
+
+Bu klasördeki 5 görseli HTML dosyanızın yanındaki "images" klasörüne kopyalayın.
+
+📂 DOSYALAR:
+
+1. mechanical_piping_hero.jpg (Slide 1)
+   - Mekanik Tesisat / Borulama
+   - Mavi gradient arka plan
+   - 1920x1080px
+
+2. daikin_vrv_hero.png (Slide 2)
+   - Daikin VRV Sistemleri
+   - Gerçek görsel ✅
+   - 1536x1024px
+
+3. hoval_hero.png (Slide 3)
+   - Hoval Alan Soğutma
+   - Gerçek görsel ✅
+   - 1536x1024px
+
+4. daikin_chiller_hero.jpg (Slide 4)
+   - Daikin Chiller / Kazan
+   - Gerçek görsel ✅
+   - 1182x665px
+
+5. stainless_steel_hero.jpg (Slide 5)
+   - Paslanmaz Çelik Tesisat
+   - Gri gradient arka plan
+   - 1920x1080px
+
+🎯 KURULUM:
+
+1. Bu 5 dosyayı kopyalayın
+2. HTML dosyanızın yanında "images" klasörü oluşturun
+3. 5 dosyayı images/ klasörüne yapıştırın
+4. HTML dosyasını açın - Slider çalışacak!
+
+✨ Slider özellikleri:
+- Otomatik geçiş (6.5 saniye)
+- Ok butonları (ileri/geri)
+- Dots navigation (5 nokta)
+- Smooth animasyonlar
+
+🔄 Gerçek görselleri sonra değiştirmek için:
+- Aynı isimdeki dosyaları değiştirin
+- Tarayıcıyı yenileyin
