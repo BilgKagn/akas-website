@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <style>
         body { 
             font-family: 'Inter', sans-serif;
@@ -403,12 +404,12 @@
         </div>
 
         <!-- Slider Controls -->
-        <button onclick="changeSlide(-1)" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full">
+        <button onclick="changeSlide(-1)" aria-label="Önceki slayt" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
             </svg>
         </button>
-        <button onclick="changeSlide(1)" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full">
+        <button onclick="changeSlide(1)" aria-label="Sonraki slayt" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
@@ -416,16 +417,16 @@
 
         <!-- Dots -->
         <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex space-x-3">
-            <button onclick="goToSlide(0)" class="slide-dot w-12 h-3 bg-white rounded-full"></button>
-            <button onclick="goToSlide(1)" class="slide-dot w-3 h-3 bg-white/50 rounded-full"></button>
-            <button onclick="goToSlide(2)" class="slide-dot w-3 h-3 bg-white/50 rounded-full"></button>
-            <button onclick="goToSlide(3)" class="slide-dot w-3 h-3 bg-white/50 rounded-full"></button>
-            <button onclick="goToSlide(4)" class="slide-dot w-3 h-3 bg-white/50 rounded-full"></button>
+            <button onclick="goToSlide(0)" aria-label="Slayt 1" class="slide-dot w-12 h-3 bg-white rounded-full"></button>
+            <button onclick="goToSlide(1)" aria-label="Slayt 2" class="slide-dot w-3 h-3 bg-white/50 rounded-full"></button>
+            <button onclick="goToSlide(2)" aria-label="Slayt 3" class="slide-dot w-3 h-3 bg-white/50 rounded-full"></button>
+            <button onclick="goToSlide(3)" aria-label="Slayt 4" class="slide-dot w-3 h-3 bg-white/50 rounded-full"></button>
+            <button onclick="goToSlide(4)" aria-label="Slayt 5" class="slide-dot w-3 h-3 bg-white/50 rounded-full"></button>
         </div>
     </section>
 
     <!-- Ne Yapıyoruz - Pipeline Timeline -->
-    <section id="about" class="py-12 md:py-20">
+    <section id="about" class="py-12 md:py-20" style="scroll-margin-top: 100px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-20">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Ne Yapıyoruz?</h2>
@@ -527,7 +528,7 @@
     </section>
 
     <!-- Hizmetler -->
-    <section id="services" class="py-12 md:py-20">
+    <section id="services" class="py-12 md:py-20" style="scroll-margin-top: 100px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Hizmetlerimiz</h2>
@@ -620,7 +621,7 @@
     </section>
 
     <!-- Referanslar - Stats + Sliding Logos -->
-    <section id="references" class="py-12 md:py-20">
+    <section id="references" class="py-12 md:py-20" style="scroll-margin-top: 100px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Referanslarımız</h2>
@@ -653,12 +654,12 @@
             <!-- Sliding Logo Container -->
             <div class="relative overflow-hidden bg-gray-50 py-12 rounded-lg">
                 <!-- Navigation Arrows - Güvenli z-index -->
-                <button data-carousel-prev class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white hover:bg-gray-100 flex items-center justify-center transition-colors shadow-md rounded" style="z-index: 20;">
+                <button data-carousel-prev aria-label="Önceki referans" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white hover:bg-gray-100 flex items-center justify-center transition-colors shadow-md rounded" style="z-index: 20;">
                     <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                 </button>
-                <button data-carousel-next class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white hover:bg-gray-100 flex items-center justify-center transition-colors shadow-md rounded" style="z-index: 20;">
+                <button data-carousel-next aria-label="Sonraki referans" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white hover:bg-gray-100 flex items-center justify-center transition-colors shadow-md rounded" style="z-index: 20;">
                     <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
@@ -894,7 +895,7 @@
     </section>
 
     <!-- İletişim -->
-    <section id="contact" class="py-12 md:py-20">
+    <section id="contact" class="py-12 md:py-20" style="scroll-margin-top: 100px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">İletişim</h2>
