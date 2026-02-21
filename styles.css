@@ -332,3 +332,9 @@ img, video { max-width: 100%; height: auto; }
 
 /* Negative positioning for nav underline */
 .-bottom-1 { bottom: -0.25rem; }
+
+/* Navbar scroll state classes */
+.bg-white\/95 { background-color: rgb(255 255 255 / 0.95); }
+.backdrop-blur-md { backdrop-filter: blur(12px); }
+.mx-4 { margin-left: 1rem; margin-right: 1rem; }
+.mt-4 { margin-top: 1rem; }
