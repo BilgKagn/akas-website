@@ -42,6 +42,7 @@
         .hero-content {
             opacity: 1;
             transition: opacity 400ms ease-out;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.4);
         }
         
         .hero-content.fade-out {
@@ -313,7 +314,7 @@
                     Teklif Al
                 </a>
                 <!-- Mobile Hamburger Button -->
-                <button id="menuToggle" aria-label="Menüyü aç" class="md:hidden flex items-center justify-center w-10 h-10 relative z-50" onclick="toggleMobileMenu()">
+                <button id="menuToggle" aria-label="Menüyü aç" class="md:hidden flex items-center justify-center w-10 h-10 relative z-50 bg-transparent" style="background: transparent; border: none; outline: none;" onclick="toggleMobileMenu()">
                     <div id="hamburgerIcon" class="flex flex-col justify-center items-center w-6 h-5 relative">
                         <span class="hamburger-line bg-white block w-6 h-0.5 rounded-full transition-all duration-300 absolute top-0"></span>
                         <span class="hamburger-line bg-white block w-6 h-0.5 rounded-full transition-all duration-300 absolute top-1/2 -translate-y-1/2"></span>
@@ -1231,7 +1232,7 @@
                 document.getElementById('menuToggle').setAttribute('aria-label', 'Menüyü kapat');
                 // X her zaman beyaz olsun
                 document.querySelectorAll('.hamburger-line').forEach(line => {
-                    line.classList.remove('bg-gray-900');
+                    line.classList.remove('bg-primary');
                     line.classList.add('bg-white');
                 });
             } else {
@@ -1248,7 +1249,7 @@
             if (window.scrollY > 50) {
                 document.querySelectorAll('.hamburger-line').forEach(line => {
                     line.classList.remove('bg-white');
-                    line.classList.add('bg-gray-900');
+                    line.classList.add('bg-primary');
                 });
             }
         }
@@ -1276,7 +1277,7 @@
                 if (!menuOpen) {
                     document.querySelectorAll('.hamburger-line').forEach(line => {
                         line.classList.remove('bg-white');
-                        line.classList.add('bg-gray-900');
+                        line.classList.add('bg-primary');
                     });
                 }
             } else {
@@ -1295,7 +1296,7 @@
                 // Hamburger rengi (menü kapalıysa)
                 if (!menuOpen) {
                     document.querySelectorAll('.hamburger-line').forEach(line => {
-                        line.classList.remove('bg-gray-900');
+                        line.classList.remove('bg-primary');
                         line.classList.add('bg-white');
                     });
                 }
