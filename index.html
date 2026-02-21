@@ -1230,11 +1230,18 @@
                 document.body.classList.add('mobile-menu-open');
                 document.body.style.overflow = 'hidden';
                 document.getElementById('menuToggle').setAttribute('aria-label', 'Menüyü kapat');
-                // X her zaman beyaz olsun
-                document.querySelectorAll('.hamburger-line').forEach(line => {
-                    line.classList.remove('bg-primary');
-                    line.classList.add('bg-white');
-                });
+                // X rengi: scroll durumuna göre
+                if (window.scrollY > 50) {
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.remove('bg-white');
+                        line.classList.add('bg-primary');
+                    });
+                } else {
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.remove('bg-primary');
+                        line.classList.add('bg-white');
+                    });
+                }
             } else {
                 closeMobileMenu();
             }
