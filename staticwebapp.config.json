@@ -42,6 +42,7 @@
     }
   ],
   "navigationFallback": {
-    "rewrite": "/index.html"
+    "rewrite": "/index.html",
+    "exclude": ["/robots.txt", "/sitemap.xml", "/images/*", "/styles.css", "/favicon.ico", "/favicon-*.png", "/apple-touch-icon.png"]
   }
 }
