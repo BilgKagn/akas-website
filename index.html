@@ -108,6 +108,56 @@
                 width: calc(100% - 4px); /* Border padding çıkar */
             }
         }
+        
+        /* Mobile Menu Styles */
+        .mobile-menu-open #mobileMenu {
+            pointer-events: auto;
+        }
+        .mobile-menu-open #menuOverlay {
+            opacity: 1;
+        }
+        .mobile-menu-open #menuContent {
+            opacity: 1;
+            transform: translateY(0) !important;
+        }
+        
+        /* Hamburger to X animation */
+        .mobile-menu-open .hamburger-line:nth-child(1) {
+            transform: rotate(45deg);
+            top: 50% !important;
+            margin-top: -1px;
+        }
+        .mobile-menu-open .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-open .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg);
+            bottom: auto !important;
+            top: 50% !important;
+            margin-top: -1px;
+        }
+        
+        /* Staggered link animation */
+        .mobile-menu-open .mobile-menu-link {
+            animation: fadeInUp 400ms ease-out forwards;
+            opacity: 0;
+        }
+        .mobile-menu-open .mobile-menu-link:nth-child(1) { animation-delay: 100ms; }
+        .mobile-menu-open .mobile-menu-link:nth-child(2) { animation-delay: 150ms; }
+        .mobile-menu-open .mobile-menu-link:nth-child(3) { animation-delay: 200ms; }
+        .mobile-menu-open .mobile-menu-link:nth-child(4) { animation-delay: 250ms; }
+        .mobile-menu-open .mobile-menu-link:nth-child(5) { animation-delay: 300ms; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
     
     <!-- Schema.org Structured Data for SEO -->
@@ -262,9 +312,40 @@
                 <a href="#contact" class="hidden md:block px-6 py-2.5 rounded-lg font-semibold text-sm bg-white text-primary hover:bg-gray-50 shadow-lg hover:shadow-xl transition-all duration-300">
                     Teklif Al
                 </a>
+                <!-- Mobile Hamburger Button -->
+                <button id="menuToggle" aria-label="Menüyü aç" class="md:hidden flex items-center justify-center w-10 h-10 relative z-50" onclick="toggleMobileMenu()">
+                    <div id="hamburgerIcon" class="flex flex-col justify-center items-center w-6 h-5 relative">
+                        <span class="hamburger-line bg-white block w-6 h-0.5 rounded-full transition-all duration-300 absolute top-0"></span>
+                        <span class="hamburger-line bg-white block w-6 h-0.5 rounded-full transition-all duration-300 absolute top-1/2 -translate-y-1/2"></span>
+                        <span class="hamburger-line bg-white block w-6 h-0.5 rounded-full transition-all duration-300 absolute bottom-0"></span>
+                    </div>
+                </button>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Full-Screen Overlay Menu -->
+    <div id="mobileMenu" class="fixed inset-0 z-40 pointer-events-none">
+        <!-- Dark overlay background -->
+        <div id="menuOverlay" class="absolute inset-0 bg-primary-dark opacity-0 transition-opacity duration-500"></div>
+        <!-- Menu content -->
+        <div id="menuContent" class="relative z-10 h-full flex flex-col items-center justify-center opacity-0 transition-all duration-500" style="transform: translateY(20px);">
+            <a href="#home" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">Ana Sayfa</a>
+            <a href="#about" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">Hakkımızda</a>
+            <a href="#services" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">Hizmetler</a>
+            <a href="#references" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">Referanslar</a>
+            <a href="#contact" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">İletişim</a>
+            <div class="mt-8">
+                <a href="#contact" onclick="closeMobileMenu()" class="inline-block bg-white text-primary font-semibold px-8 py-4 rounded-lg shadow-xl text-lg transition-all duration-300 hover:bg-white/90">
+                    Teklif Al
+                </a>
+            </div>
+            <!-- Contact info -->
+            <div class="mt-12 text-center">
+                <a href="tel:05335745960" class="text-white/70 text-lg hover:text-white transition-colors">0533 574 59 60</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Slider -->
     <section id="home" class="relative h-screen w-full overflow-hidden">
@@ -1139,6 +1220,39 @@
     </footer>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Mobile Menu Toggle
+        let menuOpen = false;
+        
+        function toggleMobileMenu() {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                document.body.classList.add('mobile-menu-open');
+                document.body.style.overflow = 'hidden';
+                document.getElementById('menuToggle').setAttribute('aria-label', 'Menüyü kapat');
+                // X her zaman beyaz olsun
+                document.querySelectorAll('.hamburger-line').forEach(line => {
+                    line.classList.remove('bg-gray-900');
+                    line.classList.add('bg-white');
+                });
+            } else {
+                closeMobileMenu();
+            }
+        }
+        
+        function closeMobileMenu() {
+            menuOpen = false;
+            document.body.classList.remove('mobile-menu-open');
+            document.body.style.overflow = '';
+            document.getElementById('menuToggle').setAttribute('aria-label', 'Menüyü aç');
+            // Scroll durumuna göre renk ayarla
+            if (window.scrollY > 50) {
+                document.querySelectorAll('.hamburger-line').forEach(line => {
+                    line.classList.remove('bg-white');
+                    line.classList.add('bg-gray-900');
+                });
+            }
+        }
+
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
@@ -1158,6 +1272,13 @@
                 logoWhite.classList.add('opacity-0');
                 logoDark.classList.remove('opacity-0');
                 logoDark.classList.add('opacity-100');
+                // Hamburger rengi (menü kapalıysa)
+                if (!menuOpen) {
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.remove('bg-white');
+                        line.classList.add('bg-gray-900');
+                    });
+                }
             } else {
                 navbar.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-lg', 'py-3', 'mx-4', 'mt-4', 'rounded-2xl');
                 navbar.classList.add('bg-transparent', 'py-5');
@@ -1171,6 +1292,13 @@
                 logoWhite.classList.add('opacity-100');
                 logoDark.classList.remove('opacity-100');
                 logoDark.classList.add('opacity-0');
+                // Hamburger rengi (menü kapalıysa)
+                if (!menuOpen) {
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.remove('bg-gray-900');
+                        line.classList.add('bg-white');
+                    });
+                }
             }
         });
 
