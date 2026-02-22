@@ -1015,7 +1015,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <h4 class="font-semibold text-gray-900 mb-1">E-posta</h4>
-                                    <a href="/cdn-cgi/l/email-protection#067674696c6346676d67756b736e6368626f756a6f6d2865696b287274" class="text-primary hover:text-primary-dark font-medium"><span class="__cf_email__" data-cfemail="d8a8aab7b2bd98b9b3b9abb5adb0bdb6bcb1abb4b1b3f6bbb7b5f6acaa">[email&#160;protected]</span></a>
+                                    <a href="mailto:info@akasmuhendislik.com.tr" class="text-primary hover:text-primary-dark font-medium">info@akasmuhendislik.com.tr</a>
                                 </div>
                             </div>
                             <div class="flex items-start">
@@ -1128,12 +1128,21 @@
                         </div>
                         <span class="text-red-500 text-xs hidden block" data-error="consent">Devam etmek için onay vermelisiniz</span>
                         
+                        <!-- Cloudflare Turnstile -->
+                        <div class="cf-turnstile" data-sitekey="0x4AAAAAACgoAO2UBC157d5J" data-theme="light" data-language="tr"></div>
+                        <span class="text-red-500 text-xs hidden" id="turnstileError">Lütfen doğrulamayı tamamlayın</span>
+                        
                         <button 
                             type="submit" 
                             id="submitBtn"
                             class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-4 rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                             Mesaj Gönder
                         </button>
+                        
+                        <p class="text-xs text-gray-400 text-center mt-2">
+                            Bu site Cloudflare Turnstile ile korunmaktadır. 
+                            <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" class="underline">Gizlilik Politikası</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -1199,7 +1208,7 @@
                             <svg class="w-5 h-5 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <a href="/cdn-cgi/l/email-protection#38484a57525d785953594b554d505d565c514b545153165b5755164c4a" class="hover:text-white transition-colors break-all"><span class="__cf_email__" data-cfemail="7000021f1a1530111b11031d0518151e1419031c191b5e131f1d5e0402">[email&#160;protected]</span></a>
+                            <a href="mailto:info@akasmuhendislik.com.tr" class="hover:text-white transition-colors break-all">info@akasmuhendislik.com.tr</a>
                         </li>
                     </ul>
                 </div>
@@ -1212,7 +1221,7 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Mobile Menu Toggle
         let menuOpen = false;
         
@@ -1509,12 +1518,13 @@
         });
 
         // Form submit
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Hide messages
             successMessage.classList.add('hidden');
             errorMessage.classList.add('hidden');
+            document.getElementById('turnstileError').classList.add('hidden');
             
             // Validate all
             let isFormValid = true;
@@ -1528,4 +1538,79 @@
                 errorText.textContent = 'Lütfen tüm alanları doğru şekilde doldurun.';
                 errorMessage.classList.remove('hidden');
                 errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        
+                return;
+            }
+            
+            // Turnstile token kontrolü
+            const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]');
+            if (!turnstileResponse || !turnstileResponse.value) {
+                document.getElementById('turnstileError').classList.remove('hidden');
+                errorText.textContent = 'Lütfen doğrulamayı tamamlayın.';
+                errorMessage.classList.remove('hidden');
+                return;
+            }
+            
+            // Submit
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Gönderiliyor...';
+            
+            // Power Automate'e gönder
+            const FORM_SECRET = 'AKAS-2026-FORM-KEY'; // Power Automate'de de aynı olacak
+            const POWER_AUTOMATE_URL = 'POWER_AUTOMATE_URL_BURAYA'; // Power Automate HTTP trigger URL'i
+            
+            const payload = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                message: document.getElementById('message').value.trim(),
+                timestamp: new Date().toISOString(),
+                'cf-turnstile-response': turnstileResponse.value
+            };
+            
+            try {
+                const response = await fetch(POWER_AUTOMATE_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-FORM-KEY': FORM_SECRET
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    successMessage.classList.remove('hidden');
+                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    contactForm.reset();
+                    
+                    // Turnstile'ı sıfırla (yeni token için)
+                    if (typeof turnstile !== 'undefined') {
+                        turnstile.reset();
+                    }
+                    
+                    // 8 saniye sonra başarı mesajını gizle
+                    setTimeout(() => {
+                        successMessage.classList.add('hidden');
+                    }, 8000);
+                } else {
+                    throw new Error('Sunucu hatası');
+                }
+            } catch (error) {
+                errorText.textContent = 'Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin veya bizi telefonla arayın.';
+                errorMessage.classList.remove('hidden');
+                errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Turnstile'ı sıfırla
+                if (typeof turnstile !== 'undefined') {
+                    turnstile.reset();
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Mesaj Gönder';
+            }
+        });
+    </script>
+    
+    <!-- Cloudflare Turnstile (defer ile yükleniyor - performans dostu) -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</body>
+</html>
