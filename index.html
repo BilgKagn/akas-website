@@ -1555,7 +1555,6 @@
             submitBtn.textContent = 'Gönderiliyor...';
             
             // Power Automate'e gönder
-            const FORM_SECRET = 'AKAS_FORMKEY_01493f465e99d745619439fefc51960e9ddf5e6b95422f1754b6132d488637e6'; // Power Automate'de de aynı olacak
             const POWER_AUTOMATE_URL = 'https://default130b3b4b267a437ea57736b2778ce1.42.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5500ca4c11664421936ed9c830da8229/triggers/manual/paths/invoke?api-version=1'; // Power Automate HTTP trigger URL'i
             
             const payload = {
@@ -1564,15 +1563,15 @@
                 phone: document.getElementById('phone').value.trim(),
                 message: document.getElementById('message').value.trim(),
                 timestamp: new Date().toISOString(),
-                'cf-turnstile-response': turnstileResponse.value
+                'cf-turnstile-response': turnstileResponse.value,
+                'form-key': 'AKAS_FORMKEY_01493f465e99d745619439fefc51960e9ddf5e6b95422f1754b6132d488637e6'
             };
             
             try {
                 const response = await fetch(POWER_AUTOMATE_URL, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-FORM-KEY': FORM_SECRET
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
