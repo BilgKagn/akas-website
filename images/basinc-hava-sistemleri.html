@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basınçlı Hava Sistemleri | Akas Mühendislik</title>
+    <meta name="description" content="Endüstriyel basınçlı hava altyapısı kurulumu. Hat tasarımından boru çapı seçimine, drenaj noktalarından sabitlemeye kadar eksiksiz tesisat. Mersin - Akas Mühendislik.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+
+        /* Two-column layout */
+        .content-layout { display: flex; flex-direction: column; gap: 3rem; align-items: flex-start; }
+        @media (min-width: 768px) {
+            .content-layout { flex-direction: row; }
+        }
+        .content-sidebar { width: 100%; flex-shrink: 0; }
+        @media (min-width: 768px) {
+            .content-sidebar { width: 220px; position: sticky; top: 110px; align-self: flex-start; }
+        }
+
+        /* ── Navbar ── */
+        .nav-link:hover .nav-underline { width: 100% !important; }
+
+        /* Dropdown */
+        .services-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            min-width: 240px;
+            z-index: 100;
+            padding: 8px 0;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .services-dropdown.open { display: block; }
+        .services-dropdown a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #374151;
+            transition: background 0.15s, color 0.15s;
+            text-decoration: none;
+        }
+        .services-dropdown a:hover { background: #f3f4f6; color: var(--color-primary, #1e40af); }
+        .services-dropdown a.active { color: var(--color-primary, #1e40af); font-weight: 600; }
+
+
+
+        /* ── Mobile Menu ── */
+        .mobile-menu-open #mobileMenu { pointer-events: auto; }
+        .mobile-menu-open #menuOverlay { opacity: 1; }
+        .mobile-menu-open #menuContent { opacity: 1; transform: translateY(0) !important; }
+        .mobile-menu-open .hamburger-line:nth-child(1) { transform: rotate(45deg); top: 50% !important; margin-top: -1px; }
+        .mobile-menu-open .hamburger-line:nth-child(2) { opacity: 0; }
+        .mobile-menu-open .hamburger-line:nth-child(3) { transform: rotate(-45deg); bottom: auto !important; top: 50% !important; margin-top: -1px; }
+        .mobile-menu-open .mobile-menu-link { animation: fadeInUp 400ms ease-out forwards; opacity: 0; }
+        .mobile-menu-open .mobile-menu-link:nth-child(1) { animation-delay: 100ms; }
+        .mobile-menu-open .mobile-menu-link:nth-child(2) { animation-delay: 150ms; }
+        .mobile-menu-open .mobile-menu-link:nth-child(3) { animation-delay: 200ms; }
+        .mobile-menu-open .mobile-menu-link:nth-child(4) { animation-delay: 250ms; }
+        .mobile-menu-open .mobile-menu-link:nth-child(5) { animation-delay: 300ms; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Hero ── */
+        .service-hero {
+            position: relative;
+            height: 380px;
+            overflow: hidden;
+            padding-top: 80px; /* navbar yüksekliği */
+            box-sizing: border-box;
+        }
+        .service-hero img {
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; inset: 0;
+        }
+        .service-hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(10,30,60,0.55) 0%, rgba(10,30,60,0.50) 100%);
+        }
+        .service-hero-content {
+            position: relative; z-index: 10;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        /* ── Sidebar ── */
+        .sidebar-link {
+            display: flex; align-items: center;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #4b5563;
+            text-decoration: none;
+            transition: background 0.15s, color 0.15s;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        .sidebar-link:hover { background: #f3f4f6; color: #111827; }
+        .sidebar-link.active {
+            background: #eff6ff;
+            color: var(--color-primary, #1e40af);
+            font-weight: 600;
+        }
+        .sidebar-link .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: currentColor; flex-shrink: 0;
+        }
+        .sidebar-link::after {
+            content: '';
+            position: absolute;
+            bottom: 5px; left: 14px;
+            height: 1.5px;
+            width: 0;
+            background: var(--color-primary, #1e40af);
+            transition: width 0.25s ease;
+            border-radius: 2px;
+        }
+        .sidebar-link:hover::after,
+        .sidebar-link.active::after { width: calc(100% - 28px); }
+
+        /* ── Problem list ── */
+        .problem-item { /* border-left kaldırıldı */ }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-5 bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="relative h-14 w-auto flex items-center bg-transparent">
+                    <img id="logo-white" src="images/logo-white.png" alt="Akas Mühendislik"
+                         class="h-14 w-auto object-contain transition-opacity duration-300 bg-transparent" style="max-height: 55px;"/>
+                    <img id="logo-dark" src="images/logo-dark.png" alt="Akas Mühendislik"
+                         class="h-14 w-auto object-contain absolute top-0 left-0 opacity-0 transition-opacity duration-300 bg-transparent" style="max-height: 55px;"/>
+                </a>
+                <div class="hidden md:flex items-center space-x-12">
+                    <a href="index.html" class="nav-link relative text-lg font-medium text-white hover:text-primary-light transition-colors">
+                        Ana Sayfa
+                        <span class="nav-underline absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 w-0"></span>
+                    </a>
+                    <a href="index.html#about" class="nav-link relative text-lg font-medium text-white hover:text-primary-light transition-colors">
+                        Hakkımızda
+                        <span class="nav-underline absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 w-0"></span>
+                    </a>
+                    <!-- Hizmetler + dropdown -->
+                    <div class="relative" id="servicesNavItem">
+                        <div class="flex items-center gap-1">
+                            <a href="index.html#services" class="nav-link relative text-lg font-medium text-white hover:text-primary-light transition-colors">
+                                Hizmetler
+                                <span class="nav-underline absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 w-0"></span>
+                            </a>
+                            <button id="servicesArrow" onclick="toggleDropdown(event)" aria-label="Hizmetler listesini aç"
+                                style="background:none; border:none; cursor:pointer; padding:2px; display:flex; align-items:center;">
+                                <svg id="arrowIcon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="servicesDropdown" class="services-dropdown">
+                            <a href="basinc-hava-sistemleri.html" class="active">Basınçlı Hava Sistemleri</a>
+                            <a href="daikin-vrv-sistemleri.html">Daikin VRV Sistemleri</a>
+                            <a href="yangin-sondurme-sistemleri.html">Yangın Söndürme Sistemleri</a>
+                            <a href="hoval-alan-sogutma.html">Hoval Alan Soğutma</a>
+                            <a href="paslanmaz-celik-tesisat.html">Paslanmaz Çelik Tesisat</a>
+                            <a href="chiller-kazan-sistemleri.html">Chiller ve Kazan Sistemleri</a>
+                            <a href="endustriyel-tesisat.html">Endüstriyel Tesisat</a>
+                        </div>
+                    </div>
+                    <a href="index.html#references" class="nav-link relative text-lg font-medium text-white hover:text-primary-light transition-colors">
+                        Referanslar
+                        <span class="nav-underline absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 w-0"></span>
+                    </a>
+                    <a href="index.html#contact" class="nav-link relative text-lg font-medium text-white hover:text-primary-light transition-colors">
+                        İletişim
+                        <span class="nav-underline absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 w-0"></span>
+                    </a>
+                </div>
+                <a href="index.html#contact" class="hidden md:block px-6 py-2.5 rounded-lg font-semibold text-sm bg-white text-primary hover:bg-gray-50 shadow-lg hover:shadow-xl transition-all duration-300">
+                    Teklif Al
+                </a>
+                <!-- Mobile Hamburger Button -->
+                <button id="menuToggle" aria-label="Menüyü aç" class="md:hidden flex items-center justify-center w-10 h-10 relative z-50 bg-transparent" style="background: transparent; border: none; outline: none;" onclick="toggleMobileMenu()">
+                    <div id="hamburgerIcon" class="flex flex-col justify-center items-center w-6 h-5 relative">
+                        <span class="hamburger-line bg-white block w-6 h-0.5 rounded-full transition-all duration-300 absolute top-0"></span>
+                        <span class="hamburger-line bg-white block w-6 h-0.5 rounded-full transition-all duration-300 absolute top-1/2 -translate-y-1/2"></span>
+                        <span class="hamburger-line bg-white block w-6 h-0.5 rounded-full transition-all duration-300 absolute bottom-0"></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+        <!-- Mobile Full-Screen Overlay Menu -->
+    <div id="mobileMenu" class="fixed inset-0 z-40 pointer-events-none">
+        <div id="menuOverlay" class="absolute inset-0 bg-primary-dark opacity-0 transition-opacity duration-500"></div>
+        <div id="menuContent" class="relative z-10 h-full flex flex-col items-center justify-center opacity-0 transition-all duration-500" style="transform: translateY(20px);">
+            <a href="index.html" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">Ana Sayfa</a>
+            <a href="index.html#about" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">Hakkımızda</a>
+            <a href="index.html#services" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">Hizmetler</a>
+            <a href="index.html#references" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">Referanslar</a>
+            <a href="index.html#contact" onclick="closeMobileMenu()" class="mobile-menu-link text-white text-3xl font-bold py-4 transition-all duration-300 hover:text-white/70">İletişim</a>
+            <div class="mt-8">
+                <a href="index.html#contact" onclick="closeMobileMenu()" class="inline-block bg-white text-primary font-semibold px-8 py-4 rounded-lg shadow-xl text-lg transition-all duration-300 hover:bg-white/90">
+                    Teklif Al
+                </a>
+            </div>
+            <div class="mt-12 text-center">
+                <a href="tel:05335745960" class="text-white/70 text-lg hover:text-white transition-colors">0533 574 59 60</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ════════════════════════════════════════
+         HERO
+    ════════════════════════════════════════ -->
+    <section class="service-hero" style="display:flex; align-items:flex-end; min-height:340px;">
+        <img src="images/compressed-air-system.webp" alt="Basınçlı Hava Sistemleri" loading="eager">
+        <div class="service-hero-overlay"></div>
+        <div class="service-hero-content w-full" style="padding-bottom: 2rem;">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-3">Basınçlı Hava Sistemleri</h1>
+                <p class="text-lg text-white max-w-2xl">Üretiminizin görünmeyen ama kritik altyapısı</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         ANA İÇERİK + SIDEBAR
+    ════════════════════════════════════════ -->
+    <main class="py-14 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="content-layout">
+
+                <!-- ── Sol Sidebar ── -->
+                <aside class="content-sidebar">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3 px-2">Hizmetler</p>
+                    <nav class="flex flex-col gap-1">
+                        <a href="basinc-hava-sistemleri.html"      class="sidebar-link active"><span class="dot"></span>Basınçlı Hava Sistemleri</a>
+                        <a href="daikin-vrv-sistemleri.html"        class="sidebar-link"><span class="dot"></span>Daikin VRV Sistemleri</a>
+                        <a href="yangin-sondurme-sistemleri.html"   class="sidebar-link"><span class="dot"></span>Yangın Söndürme</a>
+                        <a href="hoval-alan-sogutma.html"           class="sidebar-link"><span class="dot"></span>Hoval Alan Soğutma</a>
+                        <a href="paslanmaz-celik-tesisat.html"      class="sidebar-link"><span class="dot"></span>Paslanmaz Çelik Tesisat</a>
+                        <a href="chiller-kazan-sistemleri.html"     class="sidebar-link"><span class="dot"></span>Chiller ve Kazan</a>
+                        <a href="endustriyel-tesisat.html"          class="sidebar-link"><span class="dot"></span>Endüstriyel Tesisat</a>
+                    </nav>
+                </aside>
+
+                <!-- ── Sağ İçerik ── -->
+                <article class="flex-1 max-w-2xl">
+
+                    <!-- Giriş -->
+                    <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                        Birçok endüstriyel tesiste basınçlı hava, elektriğin ardından en önemli enerji kaynaklarından biridir. Ancak sistem çoğu zaman yıllar içinde parça parça büyür ve gerçek performansı sorgulanmaz.
+                    </p>
+                    <p class="text-gray-600 mb-3">Ta ki;</p>
+                    <ul class="space-y-2 mb-6 text-gray-700 ml-2">
+                        <li style="display:flex; align-items:flex-start; gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:#1e40af;flex-shrink:0;margin-top:7px;"></span>Makine hatalarında basınç uyarıları görülene kadar</li>
+                        <li style="display:flex; align-items:flex-start; gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:#1e40af;flex-shrink:0;margin-top:7px;"></span>Kompresörler sürekli tam yükte çalışana kadar</li>
+                        <li style="display:flex; align-items:flex-start; gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:#1e40af;flex-shrink:0;margin-top:7px;"></span>Nem ekipmanlara zarar verene kadar</li>
+                        <li style="display:flex; align-items:flex-start; gap:10px;"><span style="width:7px;height:7px;border-radius:50%;background:#1e40af;flex-shrink:0;margin-top:7px;"></span>Enerji maliyetleri beklenmedik şekilde artana kadar</li>
+                    </ul>
+                    <p class="text-gray-700 mb-14">
+                        Bu noktada sorun genellikle kompresörde değil, sistemin tamamındadır.
+                    </p>
+
+                    <!-- Problemler -->
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Sahada En Sık Karşılaştığımız Problemler</h2>
+                    <div class="w-12 h-1 bg-primary mb-6"></div>
+                    <p class="text-gray-600 mb-8">Çoğu tesis bu sorunları yıllar içinde "normal" kabul eder. Oysa doğru mühendislik yaklaşımıyla büyük bölümü çözülebilir.</p>
+
+                    <div class="space-y-6 mb-14">
+                        <div class="problem-item">
+                            <h3 class="text-base font-semibold text-gray-900 mb-1">Uç noktada basınç düşümü</h3>
+                            <p class="text-gray-600 leading-relaxed">Makine çalışır ama performans düşer. Genellikle hat tasarımı veya yanlış boru çapı seçiminden kaynaklanır.</p>
+                        </div>
+                        <div class="problem-item">
+                            <h3 class="text-base font-semibold text-gray-900 mb-1">Hat içinde nem ve yoğuşma</h3>
+                            <p class="text-gray-600 leading-relaxed">Ekipman ömrünü kısaltır, üretim kalitesini olumsuz etkiler.</p>
+                        </div>
+                        <div class="problem-item">
+                            <h3 class="text-base font-semibold text-gray-900 mb-1">Kondens drenaj sorunları</h3>
+                            <p class="text-gray-600 leading-relaxed">Tahliye edilmeyen kondens; korozyon, kirlenme ve ani arızalara yol açar.</p>
+                        </div>
+                        <div class="problem-item">
+                            <h3 class="text-base font-semibold text-gray-900 mb-1">Yüksek enerji tüketimi</h3>
+                            <p class="text-gray-600 leading-relaxed">Kaçaklar, yanlış basınç ayarları veya hat kayıpları kompresörü gereğinden fazla çalıştırır.</p>
+                        </div>
+                    </div>
+
+                    <!-- Ne Yapıyoruz -->
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Ne Yapıyoruz?</h2>
+                    <div class="w-12 h-1 bg-primary mb-6"></div>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Akas Mühendislik olarak basınçlı hava altyapısını baştan doğru kurarız. Hat tasarımından boru çapı seçimine, drenaj noktalarından sabitlemeye kadar her detayı üretim ihtiyacına göre planlayarak monte ederiz.
+                    </p>
+                    <p class="text-gray-700 mb-14">
+                        Önce ihtiyacı doğru anlar, sonra kalıcı çözümü kurarız.
+                    </p>
+
+                    <!-- Ne Kazanırsınız -->
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Ne Kazanırsınız?</h2>
+                    <div class="w-12 h-1 bg-primary mb-6"></div>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Doğru projelendirilmiş bir sistem; üretim sürekliliğini artırır, enerji maliyetlerini düşürür, ekipman ömrünü uzatır ve gelecekteki kapasite artışlarına hazır olur.
+                    </p>
+                    <p class="text-gray-600 mb-14">
+                        İyi tasarlanmış bir sistem fark edilmez. Çünkü sorun çıkarmaz. Bizim hedefimiz tam olarak budur.
+                    </p>
+
+                    <!-- CTA -->
+                    <div style="text-align:center; padding-top: 1rem;">
+                        <p class="text-gray-700 mb-2">Tesisiniz için yeni bir basınçlı hava altyapısı planlıyorsanız bize ulaşın.</p>
+                        <p class="text-gray-600 mb-8">İhtiyacı birlikte netleştirelim, doğru sistemi birlikte kuralım.</p>
+                        <a href="index.html#contact"
+                           class="inline-block bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-lg"
+                           style="padding: 1rem 2.5rem; font-size: 1rem;">
+                            Bize Ulaşın
+                        </a>
+                    </div>
+
+                </article>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- ════════════════════════════════════════
+         FOOTER
+    ════════════════════════════════════════ -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="relative h-12 mb-2">
+                        <img src="images/logo-white.png" alt="Akas Mühendislik" class="h-12 w-auto object-contain">
+                    </div>
+                    <p class="text-primary font-semibold text-sm mb-4">Gerektiği Gibi!</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Doğru mühendislik, doğru uygulama. Mekanik tesisat ve iklimlendirme çözümlerinde güvenilir iş ortağınız.</p>
+                    <div class="mt-6">
+                        <a href="https://www.linkedin.com/company/106318071/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            <span class="ml-2 text-sm">LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">Hızlı Linkler</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html"            class="text-gray-400 hover:text-white transition-colors">Ana Sayfa</a></li>
+                        <li><a href="index.html#about"      class="text-gray-400 hover:text-white transition-colors">Hakkımızda</a></li>
+                        <li><a href="index.html#services"   class="text-gray-400 hover:text-white transition-colors">Hizmetler</a></li>
+                        <li><a href="index.html#references" class="text-gray-400 hover:text-white transition-colors">Referanslar</a></li>
+                        <li><a href="index.html#contact"    class="text-gray-400 hover:text-white transition-colors">İletişim</a></li>
+                        <li><a href="/aydinlatma-metni.html" target="_blank" class="text-gray-400 hover:text-white transition-colors">KVKK Aydınlatma Metni</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg mb-4">İletişim</h3>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <a href="https://maps.google.com/?q=Akas+Mekanik+Mühendislik+Mersin" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+                                Deniz Mah. 3022 Sk. Arıcan Natura Life Ofis<br>K:2 D:10 33120 Yenişehir/MERSİN ↗
+                            </a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                            <a href="tel:05335745960" class="hover:text-white transition-colors">0533 574 59 60</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <a href="/cdn-cgi/l/email-protection#a3d3d1ccc9c6e3c2c8c2d0ced6cbc6cdc7cad0cfcac88dc0ccce8dd7d1" class="hover:text-white transition-colors"><span class="__cf_email__" data-cfemail="ee9e9c81848bae8f858f9d839b868b808a879d828785c08d8183c09a9c">[email&#160;protected]</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
+                <p>© 2026 Akas Mühendislik. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ════════════════════════════════════════
+         SCRIPTS
+    ════════════════════════════════════════ -->
+        <script>
+        // ── Dropdown ──
+        const dropdownEl = document.getElementById('servicesDropdown');
+        const arrowBtn   = document.getElementById('servicesArrow');
+        const arrowIcon  = document.getElementById('arrowIcon');
+
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            const isOpen = dropdownEl.classList.toggle('open');
+            arrowBtn.classList.toggle('open', isOpen);
+            arrowIcon.style.transform = isOpen ? 'rotate(180deg)' : '';
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!document.getElementById('servicesNavItem').contains(e.target)) {
+                dropdownEl.classList.remove('open');
+                arrowBtn.classList.remove('open');
+                arrowIcon.style.transform = '';
+            }
+        });
+
+        // ── Mobile Menu Toggle (index.html ile birebir) ──
+        let menuOpen = false;
+
+        function toggleMobileMenu() {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                document.body.classList.add('mobile-menu-open');
+                document.body.style.overflow = 'hidden';
+                document.getElementById('menuToggle').setAttribute('aria-label', 'Menüyü kapat');
+                if (window.scrollY > 50) {
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.remove('bg-white');
+                        line.classList.add('bg-primary');
+                    });
+                } else {
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.remove('bg-primary');
+                        line.classList.add('bg-white');
+                    });
+                }
+            } else {
+                closeMobileMenu();
+            }
+        }
+
+        function closeMobileMenu() {
+            menuOpen = false;
+            document.body.classList.remove('mobile-menu-open');
+            document.body.style.overflow = '';
+            document.getElementById('menuToggle').setAttribute('aria-label', 'Menüyü aç');
+            if (window.scrollY > 50) {
+                document.querySelectorAll('.hamburger-line').forEach(line => {
+                    line.classList.remove('bg-white');
+                    line.classList.add('bg-primary');
+                });
+            }
+        }
+
+        // ── Navbar scroll (index.html ile birebir) ──
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const logoWhite = document.getElementById('logo-white');
+            const logoDark = document.getElementById('logo-dark');
+
+            if (window.scrollY > 50) {
+                navbar.classList.remove('bg-transparent', 'py-5');
+                navbar.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-lg', 'py-3', 'mx-4', 'mt-4', 'rounded-2xl');
+                navbar.querySelectorAll('.nav-link').forEach(a => {
+                    a.classList.remove('text-white');
+                    a.classList.add('text-gray-700');
+                });
+                arrowIcon.setAttribute('stroke', '#374151');
+                logoWhite.classList.remove('opacity-100');
+                logoWhite.classList.add('opacity-0');
+                logoDark.classList.remove('opacity-0');
+                logoDark.classList.add('opacity-100');
+                if (!menuOpen) {
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.remove('bg-white');
+                        line.classList.add('bg-primary');
+                    });
+                }
+            } else {
+                navbar.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-lg', 'py-3', 'mx-4', 'mt-4', 'rounded-2xl');
+                navbar.classList.add('bg-transparent', 'py-5');
+                navbar.querySelectorAll('.nav-link').forEach(a => {
+                    a.classList.remove('text-gray-700');
+                    a.classList.add('text-white');
+                });
+                arrowIcon.setAttribute('stroke', 'white');
+                logoWhite.classList.remove('opacity-0');
+                logoWhite.classList.add('opacity-100');
+                logoDark.classList.remove('opacity-100');
+                logoDark.classList.add('opacity-0');
+                if (!menuOpen) {
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.remove('bg-primary');
+                        line.classList.add('bg-white');
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
