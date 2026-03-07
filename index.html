@@ -74,6 +74,34 @@
         .nav-link:hover .nav-underline {
             width: 100% !important;
         }
+
+        /* Hizmetler Dropdown */
+        .services-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            min-width: 240px;
+            z-index: 100;
+            padding: 8px 0;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .services-dropdown.open { display: block; }
+        .services-dropdown a {
+            display: block;
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #374151;
+            text-decoration: none;
+            transition: background 0.15s, color 0.15s;
+        }
+        .services-dropdown a:hover { background: #f3f4f6; color: #0d4fa3; }
+        .dropdown-arrow-icon { transition: transform 0.2s; }
+        .dropdown-arrow-icon.open { transform: rotate(180deg); }
         
         /* Slider dots with progress animation */
         .slide-dot {
@@ -290,10 +318,29 @@
                         Hakkımızda
                         <span class="nav-underline absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 w-0"></span>
                     </a>
-                    <a href="#services" class="nav-link relative text-lg font-medium text-white hover:text-primary-light transition-colors">
-                        Hizmetler
-                        <span class="nav-underline absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 w-0"></span>
-                    </a>
+                    <div class="relative" id="servicesNavItem">
+                        <div class="flex items-center gap-1">
+                            <a href="#services" class="nav-link relative text-lg font-medium text-white hover:text-primary-light transition-colors">
+                                Hizmetler
+                                <span class="nav-underline absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 w-0"></span>
+                            </a>
+                            <button onclick="toggleDropdown(event)" aria-label="Hizmetler listesini aç"
+                                style="background:none; border:none; cursor:pointer; padding:2px; display:flex; align-items:center;">
+                                <svg id="arrowIcon" class="dropdown-arrow-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="servicesDropdown" class="services-dropdown">
+                            <a href="basinc-hava-sistemleri.html">Basınçlı Hava Sistemleri</a>
+                            <a href="daikin-vrv-sistemleri.html">Daikin VRV Sistemleri</a>
+                            <a href="yangin-sondurme-sistemleri.html">Yangın Söndürme Sistemleri</a>
+                            <a href="hoval-alan-sogutma.html">Hoval Alan Soğutma</a>
+                            <a href="paslanmaz-celik-tesisat.html">Paslanmaz Çelik Tesisat</a>
+                            <a href="chiller-kazan-sistemleri.html">Chiller ve Kazan Sistemleri</a>
+                            <a href="endustriyel-tesisat.html">Endüstriyel Tesisat</a>
+                        </div>
+                    </div>
                     <a href="#references" class="nav-link relative text-lg font-medium text-white hover:text-primary-light transition-colors">
                         Referanslar
                         <span class="nav-underline absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 w-0"></span>
@@ -501,7 +548,7 @@
     </section>
 
     <!-- Ne Yapıyoruz - Pipeline Timeline -->
-    <section id="about" class="py-12 md:py-20" style="scroll-margin-top: 100px;">
+    <section id="about" class="py-12 md:py-20" style="scroll-margin-top: 140px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-20">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Ne Yapıyoruz?</h2>
@@ -603,7 +650,7 @@
     </section>
 
     <!-- Hizmetler -->
-    <section id="services" class="py-12 md:py-20" style="scroll-margin-top: 100px;">
+    <section id="services" class="py-12 md:py-20" style="scroll-margin-top: 140px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Hizmetlerimiz</h2>
@@ -617,7 +664,7 @@
             <div class="grid grid-cols-12 gap-2">
                 
                 <!-- Row 1 - Basınçlı Hava (Full Width - EN ÖNEMLİ) -->
-                <div class="col-span-12 group relative overflow-hidden cursor-pointer h-96">
+                <a href="basinc-hava-sistemleri.html" class="col-span-12 group relative overflow-hidden h-96" style="display:block; text-decoration:none;">
                     <img src="images/compressed-air-system.webp" alt="Basınçlı Hava Sistemleri" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/40 to-transparent opacity-100 group-hover:opacity-90 transition-opacity">
                         <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -625,7 +672,7 @@
                             <p class="text-base text-white/90">Atlas Copco kompresörler ile endüstriyel basınçlı hava üretimi ve dağıtım sistemleri</p>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Row 2 - Yangın (Geniş) + Daikin VRV (Dar) -->
                 <div class="col-span-12 md:col-span-7 group relative overflow-hidden cursor-pointer h-96">
@@ -695,7 +742,7 @@
     </section>
 
     <!-- Referanslar - Stats + Sliding Logos -->
-    <section id="references" class="py-12 md:py-20" style="scroll-margin-top: 100px;">
+    <section id="references" class="py-12 md:py-20" style="scroll-margin-top: 140px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Referanslarımız</h2>
@@ -969,7 +1016,7 @@
     </section>
 
     <!-- İletişim -->
-    <section id="contact" class="py-12 md:py-20" style="scroll-margin-top: 100px;">
+    <section id="contact" class="py-12 md:py-20" style="scroll-margin-top: 140px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">İletişim</h2>
@@ -1015,7 +1062,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <h4 class="font-semibold text-gray-900 mb-1">E-posta</h4>
-                                    <a href="mailto:proje@akasmuhendislik.com.tr" class="text-primary hover:text-primary-dark font-medium">proje@akasmuhendislik.com.tr</a>
+                                    <a href="/cdn-cgi/l/email-protection#98e8eaf7f2fdd8f9f3f9ebf5edf0fdf6fcf1ebf4f1f3b6fbf7f5b6ecea" class="text-primary hover:text-primary-dark font-medium"><span class="__cf_email__" data-cfemail="265654494c4366474d47554b534e4348424f554a4f4d0845494b085254">[email&#160;protected]</span></a>
                                 </div>
                             </div>
                             <div class="flex items-start">
@@ -1208,7 +1255,7 @@
                             <svg class="w-5 h-5 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            <a href="mailto:proje@akasmuhendislik.com.tr" class="hover:text-white transition-colors break-all">proje@akasmuhendislik.com.tr</a>
+                            <a href="/cdn-cgi/l/email-protection#3c4c4e5356597c5d575d4f514954595258554f505557125f535112484e" class="hover:text-white transition-colors break-all"><span class="__cf_email__" data-cfemail="562624393c3316373d37253b233e3338323f253a3f3d7835393b782224">[email&#160;protected]</span></a>
                         </li>
                     </ul>
                 </div>
@@ -1221,7 +1268,26 @@
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Hizmetler Dropdown
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            const dd = document.getElementById('servicesDropdown');
+            const icon = document.getElementById('arrowIcon');
+            const isOpen = dd.classList.toggle('open');
+            icon.classList.toggle('open', isOpen);
+            // ok rengi scroll durumuna göre
+            const scrolled = window.scrollY > 50;
+            icon.setAttribute('stroke', scrolled ? '#374151' : 'white');
+        }
+        document.addEventListener('click', function(e) {
+            const item = document.getElementById('servicesNavItem');
+            if (item && !item.contains(e.target)) {
+                document.getElementById('servicesDropdown').classList.remove('open');
+                document.getElementById('arrowIcon').classList.remove('open');
+            }
+        });
+
         // Mobile Menu Toggle
         let menuOpen = false;
         
@@ -1276,6 +1342,9 @@
                     a.classList.remove('text-white');
                     a.classList.add('text-gray-700');
                 });
+                // Dropdown ok koyu
+                const ai = document.getElementById('arrowIcon');
+                if (ai) ai.setAttribute('stroke', '#374151');
                 // Logo değişimi
                 logoWhite.classList.remove('opacity-100');
                 logoWhite.classList.add('opacity-0');
@@ -1296,6 +1365,9 @@
                     a.classList.remove('text-gray-700');
                     a.classList.add('text-white');
                 });
+                // Dropdown ok beyaz
+                const ai2 = document.getElementById('arrowIcon');
+                if (ai2) ai2.setAttribute('stroke', 'white');
                 // Logo değişimi
                 logoWhite.classList.remove('opacity-0');
                 logoWhite.classList.add('opacity-100');
@@ -1600,16 +1672,3 @@
                 
                 // Turnstile'ı sıfırla
                 if (typeof turnstile !== 'undefined') {
-                    turnstile.reset();
-                }
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Mesaj Gönder';
-            }
-        });
-    </script>
-    
-    <!-- Cloudflare Turnstile (defer ile yükleniyor - performans dostu) -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-</body>
-</html>
