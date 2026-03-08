@@ -531,8 +531,10 @@
                     });
                 }
             } else {
-                navbar.classList.remove('backdrop-blur-md', 'shadow-lg', 'py-3', 'mx-4', 'mt-4', 'rounded-2xl'); navbar.style.background = ''; navbar.style.border = 'none';
+                navbar.classList.remove('backdrop-blur-md', 'shadow-lg', 'py-3', 'mx-4', 'mt-4', 'rounded-2xl');
                 navbar.classList.add('bg-transparent', 'py-5');
+                navbar.style.background = '';
+                navbar.style.border = 'none';
                 navbar.querySelectorAll('.nav-link').forEach(a => {
                     a.classList.remove('text-gray-700');
                     a.classList.add('text-white');
@@ -543,4 +545,14 @@
                 logoDark.classList.remove('opacity-100');
                 logoDark.classList.add('opacity-0');
                 if (!menuOpen) {
-                    document.querySel
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.remove('bg-primary');
+                        line.classList.add('bg-white');
+                    });
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
