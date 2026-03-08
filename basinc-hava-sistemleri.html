@@ -412,7 +412,7 @@
     <!-- ════════════════════════════════════════
          SCRIPTS
     ════════════════════════════════════════ -->
-        <script>
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ── Dropdown ──
         const dropdownEl = document.getElementById('servicesDropdown');
         const arrowBtn   = document.getElementById('servicesArrow');
@@ -508,14 +508,4 @@
                 logoDark.classList.remove('opacity-100');
                 logoDark.classList.add('opacity-0');
                 if (!menuOpen) {
-                    document.querySelectorAll('.hamburger-line').forEach(line => {
-                        line.classList.remove('bg-primary');
-                        line.classList.add('bg-white');
-                    });
-                }
-            }
-        });
-    </script>
-
-</body>
-</html>
+                    document.querySel
