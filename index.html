@@ -10,12 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akas Mühendislik | Mekanik Tesisat ve İklimlendirme Çözümleri</title>
     <meta name="description" content="Mersin merkezli mekanik mühendislik taahhüt firması. Basınçlı hava, VRV klima, yangın söndürme, endüstriyel soğutma, Hoval, chiller ve paslanmaz çelik tesisat hizmetleri.">
-    <link rel="canonical" href="https://www.akasmuhendislik.com.tr/">
-    <meta property="og:title" content="Akas Mühendislik | Mekanik Tesisat ve İklimlendirme Çözümleri">
-    <meta property="og:description" content="Mersin merkezli mekanik mühendislik taahhüt firması. Basınçlı hava, VRV klima, yangın söndürme, endüstriyel soğutma, Hoval, chiller ve paslanmaz çelik tesisat hizmetleri.">
-    <meta property="og:url" content="https://www.akasmuhendislik.com.tr/">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="tr_TR">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -554,7 +548,7 @@
     </section>
 
     <!-- Ne Yapıyoruz - Pipeline Timeline -->
-    <section id="about" class="py-8 md:py-14" style="scroll-margin-top: 60px;">
+    <section id="about" class="py-10 md:py-16" style="scroll-margin-top: 60px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-20">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Ne Yapıyoruz?</h2>
@@ -656,7 +650,7 @@
     </section>
 
     <!-- Hizmetler -->
-    <section id="services" class="py-8 md:py-14" style="scroll-margin-top: 60px;">
+    <section id="services" class="py-10 md:py-16" style="scroll-margin-top: 60px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Hizmetlerimiz</h2>
@@ -748,7 +742,7 @@
     </section>
 
     <!-- Referanslar - Stats + Sliding Logos -->
-    <section id="references" class="py-8 md:py-14" style="scroll-margin-top: 60px;">
+    <section id="references" class="py-10 md:py-16" style="scroll-margin-top: 60px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Referanslarımız</h2>
@@ -1022,7 +1016,7 @@
     </section>
 
     <!-- İletişim -->
-    <section id="contact" class="py-8 md:py-14" style="scroll-margin-top: 60px;">
+    <section id="contact" class="py-10 md:py-16" style="scroll-margin-top: 60px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">İletişim</h2>
@@ -1632,7 +1626,6 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Gönderiliyor...';
             
-            // Power Automate'e gönder
             const POWER_AUTOMATE_URL = 'https://default130b3b4b267a437ea57736b2778ce1.42.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5500ca4c11664421936ed9c830da8229/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=hH-NSCOEfca-ItoP8ktBX2uFbKP72ov9gXWz5Jh5pcw';
             try {
                 const response = await fetch(POWER_AUTOMATE_URL, {
