@@ -1,0 +1,26 @@
+{
+  "name": "Matematik Ustası",
+  "short_name": "MatikApp",
+  "description": "Çocuklar için eğlenceli toplama ve çıkarma uygulaması",
+  "start_url": "/matik/",
+  "scope": "/matik/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#5bc8f5",
+  "theme_color": "#FFD600",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "math_icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "math_icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

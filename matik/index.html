@@ -1,1 +1,576 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Matematik Ustası</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD600">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MatikApp">
+<link rel="apple-touch-icon" href="math_icon_192.png">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --sky-top: #5bc8f5;
+    --sky-bot: #a8e0f7;
+    --grass:   #5cb85c;
+    --sun:     #FFD600;
+    --card-bg: #fffde7;
+    --card-border: #FFD600;
+    --correct: #43e97b;
+    --wrong:   #f5576c;
+    --btn-border: #b3e5fc;
+    --text-dark: #1a237e;
+    --font: 'Baloo 2', sans-serif;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: var(--font);
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bot) 58%, var(--grass) 58%, #3d8b3d 100%);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .sun {
+    position: fixed; top: 16px; right: 56px;
+    width: 68px; height: 68px;
+    background: var(--sun); border-radius: 50%;
+    box-shadow: 0 0 0 14px rgba(255,214,0,.22), 0 0 0 30px rgba(255,214,0,.09);
+    animation: pulse-sun 3s ease-in-out infinite;
+    z-index: 0; pointer-events: none;
+  }
+  @keyframes pulse-sun {
+    0%,100%{box-shadow:0 0 0 14px rgba(255,214,0,.22),0 0 0 30px rgba(255,214,0,.09)}
+    50%    {box-shadow:0 0 0 22px rgba(255,214,0,.28),0 0 0 44px rgba(255,214,0,.11)}
+  }
+
+  .cloud { position:fixed; background:#fff; border-radius:50px; opacity:.86; z-index:0; pointer-events:none; }
+  .cloud::before,.cloud::after{content:'';position:absolute;background:#fff;border-radius:50%;}
+  .c1{width:110px;height:34px;top:28px;left:40px;animation:drift 20s linear infinite;}
+  .c1::before{width:50px;height:50px;top:-24px;left:16px;}
+  .c1::after{width:34px;height:34px;top:-15px;left:54px;}
+  .c2{width:80px;height:26px;top:72px;left:240px;animation:drift 28s linear infinite 6s;}
+  .c2::before{width:36px;height:36px;top:-18px;left:10px;}
+  .c2::after{width:24px;height:24px;top:-11px;left:40px;}
+  .c3{width:96px;height:30px;top:18px;left:520px;animation:drift 24s linear infinite 11s;}
+  .c3::before{width:44px;height:44px;top:-22px;left:14px;}
+  .c3::after{width:28px;height:28px;top:-13px;left:50px;}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(110vw)}}
+
+  .star-deco{position:fixed;z-index:0;pointer-events:none;opacity:.75;animation:float-star 4s ease-in-out infinite;}
+  @keyframes float-star{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(18deg)}}
+
+  @keyframes fox-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+  /* ── Screens ── */
+  .screen {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; align-items: center;
+    width: 100%;
+    padding: 20px 16px 32px;
+  }
+
+  .app-logo-img {
+    width: 110px; height: 110px;
+    border-radius: 26px;
+    box-shadow: 0 8px 28px rgba(0,0,0,.18);
+    margin-top: 10px;
+    margin-bottom: 4px;
+  }
+  .app-title {
+    font-size: clamp(1.9rem, 5vw, 2.7rem);
+    font-weight: 800; color: #fff;
+    text-shadow: 0 4px 14px rgba(0,0,0,.18), 0 2px 0 rgba(255,214,0,.5);
+    text-align: center; line-height: 1.1;
+    margin-top: 18px;
+  }
+  .app-sub {
+    color: rgba(255,255,255,.92); font-size: clamp(.88rem,2vw,1rem);
+    font-weight: 700; margin-top: 3px; text-align: center;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--card-bg);
+    border-radius: 28px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.14), 0 2px 0 var(--card-border);
+    border: 3px solid var(--card-border);
+    padding: 22px 26px 20px;
+    margin-top: 14px;
+    width: min(440px, 92vw);
+    text-align: center;
+  }
+
+  /* ── Level select ── */
+  .level-title {
+    font-size: clamp(1.15rem,3.5vw,1.5rem);
+    font-weight: 800; color: var(--text-dark);
+    margin-bottom: 14px;
+  }
+  .level-cards { display: flex; flex-direction: column; gap: 10px; }
+  .level-card {
+    background: #fff; border: 3px solid var(--btn-border);
+    border-radius: 16px; padding: 12px 16px;
+    cursor: pointer; transition: all .18s cubic-bezier(.34,1.56,.64,1);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .level-card:hover{transform:translateY(-3px) scale(1.02);border-color:#4fc3f7;box-shadow:0 6px 18px rgba(79,195,247,.22);}
+  .lv-icon { font-size: 1.9rem; flex-shrink: 0; }
+  .lv-info { flex: 1; text-align: left; }
+  .lv-name { font-size: clamp(.9rem,2.5vw,1.05rem); font-weight: 800; color: var(--text-dark); }
+  .lv-desc { font-size: clamp(.75rem,2vw,.85rem); color: #666; font-weight: 600; margin-top: 1px; }
+  .lv-badge { font-size: .74rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; color: #fff; flex-shrink:0; }
+  .lv1 .lv-badge{background:#43e97b;}
+  .lv2 .lv-badge{background:#4fc3f7;}
+  .lv3 .lv-badge{background:#f5576c;}
+
+  /* ── Score bar ── */
+  .scorebar {
+    display: flex; gap: 14px; align-items: center; justify-content: center;
+    flex-wrap: wrap;
+    background: rgba(255,255,255,.88); border-radius: 50px;
+    padding: 6px 22px; margin-top: 12px;
+    box-shadow: 0 3px 14px rgba(0,0,0,.1);
+    font-weight: 800; font-size: clamp(.85rem,2vw,1rem); color: #333;
+  }
+
+  /* ── Question ── */
+  .level-badge {
+    display: inline-block;
+    background: linear-gradient(135deg,#43e97b,#38f9d7);
+    color:#fff; font-weight:800; font-size:.8rem;
+    padding: 3px 14px; border-radius: 20px; margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(67,233,123,.3);
+  }
+
+  /* ── Vertical question ── */
+  .question {
+    margin: 4px 0 14px;
+    display: inline-block;
+    font-weight: 800; color: var(--text-dark);
+    line-height: 1.15;
+    min-width: 140px;
+  }
+  .vq-num, .vq-op-row, .vq-ans {
+    font-size: clamp(2rem, 6.5vw, 3.2rem);
+    font-weight: 800;
+    display: flex;
+    width: 100%;
+  }
+  /* Üst sayı: tamamen sağa hizalı */
+  .vq-num {
+    justify-content: flex-end;
+    padding-right: 4px;
+  }
+  /* İşlem satırı: sol tarafta işaret, sağ tarafta sayı */
+  .vq-op-row {
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 4px;
+    color: #5c6bc0;
+  }
+  .vq-op-sign { flex-shrink: 0; }
+  .vq-op-num  { flex-shrink: 0; color: #5c6bc0; }
+  /* Sonuç satırı */
+  .vq-ans {
+    justify-content: flex-end;
+    padding-right: 4px;
+    color: #e53935;
+  }
+  .vq-line {
+    width: 100%;
+    height: 4px;
+    background: var(--text-dark);
+    border-radius: 4px;
+    margin: 4px 0;
+  }
+
+  .answer-row {
+    display: grid; grid-template-columns: repeat(2,1fr);
+    gap: 10px; margin-bottom: 12px;
+  }
+
+  .choice-btn {
+    font-family: var(--font);
+    font-size: clamp(1.3rem,4vw,1.75rem);
+    font-weight: 800; color: var(--text-dark);
+    background: #fff; border: 3px solid var(--btn-border);
+    border-radius: 16px; padding: 10px 8px;
+    cursor: pointer; width: 100%;
+    transition: all .18s cubic-bezier(.34,1.56,.64,1);
+    box-shadow: 0 3px 10px rgba(0,0,0,.07);
+  }
+  .choice-btn:hover{transform:translateY(-3px) scale(1.06);border-color:#4fc3f7;}
+  .choice-btn.correct{background:linear-gradient(135deg,#43e97b,#38f9d7);border-color:#43e97b;color:#fff;transform:scale(1.1);box-shadow:0 6px 20px rgba(67,233,123,.38);}
+  .choice-btn.wrong{background:linear-gradient(135deg,#f5576c,#f093fb);border-color:#f5576c;color:#fff;animation:shake .4s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+  .feedback {
+    font-size: clamp(1rem,3vw,1.35rem);
+    font-weight: 800; min-height: 34px;
+  }
+  .feedback.correct{color:#2e7d32;}
+  .feedback.wrong{color:#c62828;}
+
+  .progress-area { margin-top: 10px; }
+  .progress-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0;
+  }
+  .progress-wrap {
+    flex: 1;
+    background: #e0f7fa;
+    border-radius: 20px;
+    height: 18px;
+    overflow: hidden;
+    border: 2px solid #b3e5fc;
+    display: flex;
+    align-items: center;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg,#43e97b,#38f9d7);
+    border-radius: 20px;
+    transition: width .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .progress-label {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: .82rem; color: #3a7a3a; font-weight: 800;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .progress-wrap-rel {
+    flex: 1;
+    position: relative;
+    height: 18px;
+  }
+  .progress-wrap-rel .progress-wrap {
+    position: absolute; inset: 0; height: 100%;
+  }
+  .fox-inline {
+    font-size: 1.8rem;
+    animation: fox-bounce 2.2s ease-in-out infinite;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,.2));
+    transition: transform .35s;
+    line-height: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    height: 18px;
+  }
+  @keyframes fox-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .back-btn{
+    font-family:var(--font);font-size:.88rem;font-weight:700;
+    background:rgba(255,255,255,.72);border:2px solid rgba(255,255,255,.6);
+    border-radius:50px;padding:5px 16px;cursor:pointer;color:#1a237e;
+    margin-top:10px;transition:all .15s;
+  }
+  .back-btn:hover{background:#fff;}
+
+  /* ── Celebrate ── */
+  .celebrate{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.55);align-items:center;justify-content:center;}
+  .celebrate.show{display:flex;}
+  .celebrate-box{background:#fff;border-radius:28px;padding:34px 36px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:pop-in .45s cubic-bezier(.34,1.56,.64,1);max-width:330px;width:88vw;}
+  @keyframes pop-in{from{transform:scale(.5) rotate(-8deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+  .c-emoji{font-size:3.4rem;}
+  .celebrate-box h2{font-size:clamp(1.5rem,5vw,2.1rem);font-weight:800;color:var(--text-dark);margin:8px 0 6px;}
+  .celebrate-box p{font-size:.98rem;color:#555;font-weight:600;margin-bottom:16px;}
+  .celebrate-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+  .cel-btn{font-family:var(--font);font-size:.98rem;font-weight:800;border:none;border-radius:50px;padding:11px 22px;cursor:pointer;transition:all .18s;}
+  .cel-btn.primary{background:linear-gradient(135deg,#FFD600,#FF8C00);color:#fff;box-shadow:0 4px 16px rgba(255,140,0,.3);}
+  .cel-btn.secondary{background:linear-gradient(135deg,#4fc3f7,#0288d1);color:#fff;box-shadow:0 4px 16px rgba(2,136,209,.25);}
+  .cel-btn:hover{transform:scale(1.06);}
+
+  .confetti-piece{position:fixed;width:11px;height:11px;border-radius:3px;pointer-events:none;z-index:200;animation:fall linear forwards;}
+  @keyframes fall{0%{transform:translateY(-40px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+  .hidden{display:none!important;}
+</style>
+</head>
+<body>
+
+<div class="sun"></div>
+<div class="cloud c1"></div>
+<div class="cloud c2"></div>
+<div class="cloud c3"></div>
+
+<!-- ══ LEVEL SELECT ══ -->
+<div class="screen" id="screenSelect">
+  <div class="app-title">🌟 Matematik Ustası</div>
+  <div class="app-sub">Toplama &amp; Çıkarma</div>
+
+  <div class="card">
+    <div style="text-align:center; margin-bottom:14px;">
+      <img src="math_icon_512.png" alt="Matematik Ustası" class="app-logo-img" style="margin-top:0;">
+    </div>
+    <div class="level-title">Hangi seviyedesin?</div>
+    <div class="level-cards">
+
+      <div class="level-card lv1" onclick="startGame(1)">
+        <div class="lv-icon">🐣</div>
+        <div class="lv-info">
+          <div class="lv-name">Seviye 1 — Kolay</div>
+          <div class="lv-desc">Tek basamak + tek basamak &nbsp;(1 – 9)</div>
+        </div>
+        <div class="lv-badge">Başlangıç</div>
+      </div>
+
+      <div class="level-card lv2" onclick="startGame(2)">
+        <div class="lv-icon">🐥</div>
+        <div class="lv-info">
+          <div class="lv-name">Seviye 2 — Orta</div>
+          <div class="lv-desc">10'lu sayıya tek basamak ekleme / çıkarma (eldesiz, sonuç ≤ 30)</div>
+        </div>
+        <div class="lv-badge">Orta</div>
+      </div>
+
+      <div class="level-card lv3" onclick="startGame(3)">
+        <div class="lv-icon">🦅</div>
+        <div class="lv-info">
+          <div class="lv-name">Seviye 3 — Zor</div>
+          <div class="lv-desc">İki basamaklı + iki basamaklı (eldesiz)</div>
+        </div>
+        <div class="lv-badge">Zor</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ GAME ══ -->
+<div class="screen hidden" id="screenGame">
+  <div class="app-title">🌟 Matematik Ustası</div>
+
+  <div class="scorebar">
+    <span>⭐ Puan: <b id="score">0</b></span>
+    <span>🔥 Seri: <b id="streak">0</b></span>
+    <span>❤️ Can: <span id="lives">❤️❤️❤️</span></span>
+  </div>
+
+  <div class="card">
+    <div style="text-align:center; margin-bottom:10px;">
+      <div class="level-badge" id="levelBadge">Seviye 1</div>
+    </div>
+    <div style="display:flex; justify-content:center;">
+      <div class="question" id="question">?</div>
+    </div>
+    <div class="answer-row" id="answerRow"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="progress-area">
+      <div class="progress-footer">
+        <div class="progress-wrap-rel">
+          <div class="progress-wrap">
+            <div class="progress-bar" id="progressBar" style="width:0%"></div>
+          </div>
+          <div class="progress-label" id="progressLabel">0 / 10</div>
+        </div>
+        <div class="fox-inline" id="fox">🦊</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="back-btn" onclick="goSelect()">← Seviye seç</button>
+</div>
+
+<!-- ══ CELEBRATE ══ -->
+<div class="celebrate" id="celebrate">
+  <div class="celebrate-box">
+    <div class="c-emoji" id="cEmoji">🏆</div>
+    <h2 id="cTitle">Harika!</h2>
+    <p id="cMsg">Tüm soruları tamamladın!</p>
+    <div class="celebrate-btns">
+      <button class="cel-btn primary" onclick="restartSame()">Tekrar 🎮</button>
+      <button class="cel-btn secondary" onclick="goSelect()">Seviye seç 📋</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Stars ── */
+[[12,8],[28,18],[70,6],[82,22],[50,12],[40,28],[18,32],[65,25]].forEach(([l,t],i)=>{
+  const s=document.createElement('div');
+  s.className='star-deco';
+  s.textContent=i%3===0?'⭐':i%3===1?'🌟':'✨';
+  s.style.cssText=`left:${l}%;top:${t}%;animation-delay:${(i*.55).toFixed(1)}s;font-size:${16+Math.random()*10}px`;
+  document.body.appendChild(s);
+});
+
+/* ── State ── */
+const TOTAL=10;
+const FOXES=['🦊','🐸','🐼','🦁','🐯','🐻','🦄','🐧'];
+const OK=['Aferin! 🎉','Harika! ⭐','Süper! 🚀','Mükemmel! 🌟','Doğru! 💪','Evet! 🎊'];
+const ERR=['Neredeyse! 😅','Tekrar dene! 💪','Olmadı, devam! 🙂'];
+let score=0,streak=0,lives=3,qCount=0,lv=1,answered=false,correct=0,autoT=null;
+
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+
+/* ── Question logic ── */
+function makeQ(level){
+  let a,b,op;
+  if(level===1){
+    op=Math.random()>.45?'+':'-';
+    if(op==='+'){a=rnd(1,9);b=rnd(1,9);}
+    else{a=rnd(2,9);b=rnd(1,a);}
+  } else if(level===2){
+    op=Math.random()>.45?'+':'-';
+    if(op==='+'){
+      // result must be ≤ 30: a is a multiple of 10 (10 or 20), b is 1-9
+      a=rnd(1,2)*10; // 10 or 20
+      b=rnd(1, 30-a); // ensures a+b <= 30
+    } else {
+      // çıkarma: a ≤ 30, eldesiz (ones digit a >= ones digit b)
+      const ones=rnd(1,9);
+      const tens=rnd(1,2); // 10 veya 20 → a max 29
+      a=tens*10+ones;
+      b=rnd(1,ones); // sadece birler basamağından çıkar, elde yok
+    }
+  } else {
+    // level 3: two-digit + two-digit, no carry/borrow
+    op=Math.random()>.45?'+':'-';
+    if(op==='+'){
+      // ones: ao+bo < 10, tens: at+bt < 10
+      const ao=rnd(0,8), bo=rnd(0,9-ao);
+      const at=rnd(1,8), bt=rnd(1,9-at);
+      a=at*10+ao; b=Math.max(10,bt*10+bo);
+    } else {
+      // ones: ao >= bo, tens: at > bt (to keep result 2-digit positive)
+      const ao=rnd(1,9), bo=rnd(0,ao);
+      const at=rnd(2,9), bt=rnd(1,at-1);
+      a=at*10+ao; b=Math.max(10,bt*10+bo);
+    }
+  }
+  correct=op==='+'?a+b:a-b;
+  // vertical format: a on top, op+b in middle, ? on bottom
+  return {a, b, op};
+}
+
+function makeChoices(c){
+  const s=new Set([c]);
+  let tries=0;
+  while(s.size<4&&tries<300){tries++;const v=c+rnd(-6,6);if(v>=0&&v!==c)s.add(v);}
+  let f=1;while(s.size<4){if(!s.has(c+f))s.add(c+f);f++;}
+  return [...s].sort(()=>Math.random()-.5);
+}
+
+/* ── Navigation ── */
+function startGame(level){
+  lv=level;score=0;streak=0;lives=3;qCount=0;
+  $('score').textContent=0;$('streak').textContent=0;$('lives').textContent='❤️❤️❤️';
+  const foxEl=$('fox');
+  if(foxEl) foxEl.textContent=FOXES[rnd(0,FOXES.length-1)];
+  $('levelBadge').textContent=level===1?'Seviye 1 — Kolay':level===2?'Seviye 2 — Orta':'Seviye 3 — Zor';
+  show('screenGame');hide('screenSelect');
+  renderQ();
+}
+function goSelect(){
+  clearTimeout(autoT);
+  $('celebrate').classList.remove('show');
+  hide('screenGame');show('screenSelect');
+}
+function restartSame(){$('celebrate').classList.remove('show');startGame(lv);}
+
+/* ── Game ── */
+function renderQ(){
+  answered=false;
+  const q=makeQ(lv);
+  // Build vertical layout inside #question
+  const qEl=$('question');
+  qEl.innerHTML=`
+    <div class="vq-num">${q.a}</div>
+    <div class="vq-op-row"><span class="vq-op-sign">${q.op}</span><span class="vq-op-num">${q.b}</span></div>
+    <div class="vq-line"></div>
+    <div class="vq-ans">?</div>
+  `;
+  $('feedback').textContent='';$('feedback').className='feedback';
+  const row=$('answerRow');row.innerHTML='';
+  makeChoices(correct).forEach(c=>{
+    const b=document.createElement('button');
+    b.className='choice-btn';b.textContent=c;
+    b.onclick=()=>checkA(c,b);row.appendChild(b);
+  });
+  updateProg();
+}
+
+function checkA(val,btn){
+  if(answered)return;
+  answered=true;clearTimeout(autoT);
+  document.querySelectorAll('.choice-btn').forEach(b=>b.style.pointerEvents='none');
+  if(val===correct){
+    btn.classList.add('correct');streak++;score+=(streak>=3?2:1);
+    setFb(OK[rnd(0,OK.length-1)],'correct');animFox('happy');
+    if(streak%3===0)confetti(12);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.choice-btn').forEach(b=>{if(+b.textContent===correct)b.classList.add('correct');});
+    streak=0;lives=Math.max(0,lives-1);
+    setFb(ERR[rnd(0,ERR.length-1)],'wrong');animFox('sad');
+  }
+  $('score').textContent=score;$('streak').textContent=streak;
+  $('lives').textContent=lives===0?'💀':'❤️'.repeat(lives);
+  qCount++;updateProg();
+  if(qCount>=TOTAL||lives===0){setTimeout(endGame,950);}
+  else{autoT=setTimeout(renderQ,1500);}
+}
+
+function setFb(msg,cls){const e=$('feedback');e.textContent=msg;e.className='feedback '+cls;}
+function updateProg(){
+  $('progressBar').style.width=(qCount/TOTAL*100)+'%';
+  $('progressLabel').textContent=`${qCount} / ${TOTAL}`;
+}
+function endGame(){
+  let emoji,title,msg;
+  if(lives===0){emoji='😢';title='Canlar bitti!';msg=`${score} puan topladın. Tekrar dene!`;}
+  else if(score>=TOTAL*1.5){emoji='🏆';title='Şampiyon!';msg=`Mükemmel! ${score} puan! 🌟`;confetti(30);}
+  else if(score>=TOTAL){emoji='⭐';title='Harika!';msg=`${score} puan! Çok iyisin!`;confetti(16);}
+  else{emoji='💪';title='İyi iş!';msg=`${score} puan. Biraz daha pratik yapalım!`;}
+  $('cEmoji').textContent=emoji;$('cTitle').textContent=title;$('cMsg').textContent=msg;
+  $('celebrate').classList.add('show');
+}
+
+function animFox(mood){
+  const e=$('fox');
+  if(!e)return;
+  e.style.transform=mood==='happy'?'scale(1.4) rotate(-12deg)':'scale(.85) rotate(12deg)';
+  setTimeout(()=>e.style.transform='',420);
+}
+
+function confetti(n){
+  const colors=['#FFD600','#43e97b','#4fc3f7','#f5576c','#ab47bc','#FF8C00'];
+  for(let i=0;i<n;i++)setTimeout(()=>{
+    const el=document.createElement('div');el.className='confetti-piece';
+    el.style.left=Math.random()*100+'vw';
+    el.style.background=colors[rnd(0,colors.length-1)];
+    el.style.animationDuration=(1.2+Math.random()*2)+'s';
+    el.style.borderRadius=Math.random()>.5?'50%':'3px';
+    document.body.appendChild(el);setTimeout(()=>el.remove(),3200);
+  },i*45);
+}
+
+function $(id){return document.getElementById(id);}
+function show(id){$(id).classList.remove('hidden');}
+function hide(id){$(id).classList.add('hidden');}
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/matik/sw.js');
+  });
+}
+</script>
+</body>
+</html>
