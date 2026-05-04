@@ -5,6 +5,10 @@
   },
   "routes": [
     {
+      "route": "/matik",
+      "redirect": "/matik/"
+    },
+    {
       "route": "/images/*.webp",
       "headers": {
         "Cache-Control": "public, max-age=2592000"
@@ -43,6 +47,6 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/robots.txt", "/sitemap.xml", "/images/*", "/styles.css", "/favicon.ico", "/favicon-*.png", "/apple-touch-icon.png"]
+    "exclude": ["/matik/*", "/robots.txt", "/sitemap.xml", "/images/*", "/styles.css", "/favicon.ico", "/favicon-*.png", "/apple-touch-icon.png"]
   }
 }
