@@ -47,6 +47,6 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/matik/*", "/robots.txt", "/sitemap.xml", "/images/*", "/styles.css", "/favicon.ico", "/favicon-*.png", "/apple-touch-icon.png"]
+    "exclude": ["/matik", "/matik/*", "/robots.txt", "/sitemap.xml", "/images/*", "/styles.css", "/favicon.ico", "/favicon-*.png", "/apple-touch-icon.png"]
   }
 }
