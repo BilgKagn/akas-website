@@ -6,7 +6,7 @@
   "routes": [
     {
       "route": "/matik",
-      "redirect": "/matik/"
+      "rewrite": "/matik/"
     },
     {
       "route": "/images/*.webp",
