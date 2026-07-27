@@ -1,4 +1,4 @@
-const CACHE = 'matik-v1';
+const CACHE = 'matik-v2';
 const FILES = [
   '/matik/',
   '/matik/index.html',
@@ -8,9 +8,7 @@ const FILES = [
 ];
 
 self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(FILES))
-  );
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
   self.skipWaiting();
 });
 
@@ -25,6 +23,6 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
+    caches.match(e.request, { ignoreSearch: true }).then(cached => cached || fetch(e.request))
   );
 });
