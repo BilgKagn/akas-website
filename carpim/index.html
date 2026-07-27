@@ -351,7 +351,7 @@
         <div class="lv-icon">🐣</div>
         <div class="lv-info">
           <div class="lv-name">Seviye 1 — Kolay</div>
-          <div class="lv-desc">1, 2 ve 3 çarpım tablosu &nbsp;(×1 – ×10)</div>
+          <div class="lv-desc">Her iki çarpan da 1 – 5 &nbsp;(en fazla 5×5)</div>
         </div>
         <div class="lv-badge">Başlangıç</div>
       </div>
@@ -360,7 +360,7 @@
         <div class="lv-icon">🐥</div>
         <div class="lv-info">
           <div class="lv-name">Seviye 2 — Orta</div>
-          <div class="lv-desc">4 ve 5 çarpım tablosu &nbsp;(×1 – ×10)</div>
+          <div class="lv-desc">Bir çarpan 1 – 4, diğeri 6 – 9</div>
         </div>
         <div class="lv-badge">Orta</div>
       </div>
@@ -369,7 +369,7 @@
         <div class="lv-icon">🦅</div>
         <div class="lv-info">
           <div class="lv-name">Seviye 3 — Zor</div>
-          <div class="lv-desc">1'den 5'e tüm tablolar karışık &nbsp;(×1 – ×10)</div>
+          <div class="lv-desc">Karışık — her iki çarpan da 1 – 9</div>
         </div>
         <div class="lv-badge">Zor</div>
       </div>
@@ -458,9 +458,18 @@ function makeQ(level){
 }
 
 function genQ(level){
-  const tables = level===1 ? [1,2,3] : level===2 ? [4,5] : [1,2,3,4,5];
-  const a = tables[rnd(0,tables.length-1)];
-  const b = rnd(1,10);
+  let a,b;
+  if(level===1){
+    // Kolay: her iki çarpan da 1-5, sonuç max 5×5
+    a=rnd(1,5); b=rnd(1,5);
+  } else if(level===2){
+    // Orta: bir çarpan 1-4, diğeri 6-9 (5 hariç, sıra karışık)
+    const small=rnd(1,4), big=rnd(6,9);
+    if(Math.random()>.5){a=small;b=big;} else {a=big;b=small;}
+  } else {
+    // Zor: karışık, her iki çarpan da 1-9
+    a=rnd(1,9); b=rnd(1,9);
+  }
   return {a,b,op:'×'};
 }
 
