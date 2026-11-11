@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /matik/
+Disallow: /carpim/
 
 Sitemap: https://www.akasmuhendislik.com.tr/sitemap.xml

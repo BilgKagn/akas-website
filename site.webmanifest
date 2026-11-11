@@ -1,0 +1,23 @@
+{
+  "name": "Akas Mühendislik",
+  "short_name": "Akas",
+  "description": "Mekanik tesisat ve iklimlendirme çözümleri - Mersin",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "lang": "tr",
+  "background_color": "#ffffff",
+  "theme_color": "#0d4fa3",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
