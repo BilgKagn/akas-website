@@ -3,4 +3,45 @@ Allow: /
 Disallow: /matik/
 Disallow: /carpim/
 
+# AI arama ve asistan botları - açıkça izinli
+User-agent: GPTBot
+Allow: /
+Disallow: /matik/
+Disallow: /carpim/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /matik/
+Disallow: /carpim/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /matik/
+Disallow: /carpim/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /matik/
+Disallow: /carpim/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /matik/
+Disallow: /carpim/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /matik/
+Disallow: /carpim/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /matik/
+Disallow: /carpim/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /matik/
+Disallow: /carpim/
+
 Sitemap: https://www.akasmuhendislik.com.tr/sitemap.xml
