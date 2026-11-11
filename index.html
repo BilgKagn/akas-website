@@ -1624,32 +1624,39 @@
 
         // ============================================
         // TELEFON MASKESİ: 0 (5XX) XXX XX XX
-        // Kullanıcı sadece rakam yazar; 0 ve 5 sabittir.
+        // "0 (5" sabittir; kullanıcı kalan 9 rakamı yazar.
         // ============================================
+        const PHONE_PREFIX = '0 (5';
+
         function getPhoneDigits() {
-            // Maskedeki rakamlardan baştaki sabit 0'ı at -> 5 ile başlayan 10 hane
+            // 5'ten sonraki rakamlar (en fazla 9)
             let d = phoneInput.value.replace(/\D/g, '');
             if (d.startsWith('0')) d = d.slice(1);
-            return d.slice(0, 10);
+            if (d.startsWith('5')) d = d.slice(1);
+            return d.slice(0, 9);
         }
 
         function normalizePhoneDigits(raw) {
-            // Yapıştırılan +90 533..., 0533..., 533... hepsini 5XXXXXXXXX'e indir
+            // Yapıştırılan +90 533..., 0533..., 533..., 33... hepsini 5'ten sonraki 9 haneye indir
             let d = raw.replace(/\D/g, '');
             if (d.startsWith('90') && d.length > 10) d = d.slice(2);
             if (d.startsWith('0')) d = d.slice(1);
-            if (d.length && d[0] !== '5') d = '5' + d; // 5 sabit
-            return d.slice(0, 10);
+            if (d.startsWith('5')) d = d.slice(1);
+            return d.slice(0, 9);
         }
 
         function formatPhone(d) {
-            if (!d.length) return '';
-            let out = '0 (' + d.slice(0, 3);
-            if (d.length >= 3) out += ')';
-            if (d.length > 3) out += ' ' + d.slice(3, 6);
-            if (d.length > 6) out += ' ' + d.slice(6, 8);
-            if (d.length > 8) out += ' ' + d.slice(8, 10);
+            let out = PHONE_PREFIX + d.slice(0, 2);
+            if (d.length >= 2) out += ')';
+            if (d.length > 2) out += ' ' + d.slice(2, 5);
+            if (d.length > 5) out += ' ' + d.slice(5, 7);
+            if (d.length > 7) out += ' ' + d.slice(7, 9);
             return out;
+        }
+
+        function placeCaretEnd() {
+            const len = phoneInput.value.length;
+            try { phoneInput.setSelectionRange(len, len); } catch (_) {}
         }
 
         let prevPhoneDigits = '';
@@ -1661,14 +1668,26 @@
             }
             prevPhoneDigits = d;
             phoneInput.value = formatPhone(d);
-            // İmleci sona al
-            const len = phoneInput.value.length;
-            try { phoneInput.setSelectionRange(len, len); } catch (_) {}
+            placeCaretEnd();
         });
 
+        // Tıklayınca sabit kısım gelsin, imleç yazılacak yerde beklesin
         phoneInput.addEventListener('focus', function() {
-            const len = phoneInput.value.length;
-            try { phoneInput.setSelectionRange(len, len); } catch (_) {}
+            if (!phoneInput.value) {
+                phoneInput.value = PHONE_PREFIX;
+                prevPhoneDigits = '';
+            }
+            // Tarayıcı tıklamadan sonra imleci kendi yerleştirir; bir tık sonra sona al
+            setTimeout(placeCaretEnd, 0);
+        });
+        phoneInput.addEventListener('click', placeCaretEnd);
+
+        // Rakam girilmeden çıkılırsa alanı boşalt, örnek desen geri gelsin
+        phoneInput.addEventListener('blur', function() {
+            if (!getPhoneDigits().length) {
+                phoneInput.value = '';
+                prevPhoneDigits = '';
+            }
         });
 
         // Input validasyonu
@@ -1703,7 +1722,7 @@
                     
                     case 'phone':
                         const digits = getPhoneDigits();
-                        if (digits.length !== 10 || !digits.startsWith('5')) {
+                        if (digits.length !== 9) {
                             isValid = false;
                             errorMsg = '0 (5XX) XXX XX XX formatında 10 haneli numara girin';
                         }
@@ -1810,7 +1829,7 @@
                         'form-key': 'AKAS_FORMKEY_01493f465e99d745619439fefc51960e9ddf5e6b95422f1754b6132d488637e6',
                         name: document.getElementById('name').value.trim().slice(0, 100),
                         email: document.getElementById('email').value.trim().slice(0, 100),
-                        phone: '0' + getPhoneDigits(),
+                        phone: '05' + getPhoneDigits(),
                         message: document.getElementById('message').value.trim().slice(0, 2000),
                         timestamp: new Date().toISOString(),
                         'cf-turnstile-response': turnstileResponse.value
