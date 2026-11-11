@@ -44,4 +44,5 @@ Allow: /
 Disallow: /matik/
 Disallow: /carpim/
 
+Agentmap: https://www.akasmuhendislik.com.tr/.well-known/ard.json
 Sitemap: https://www.akasmuhendislik.com.tr/sitemap.xml
